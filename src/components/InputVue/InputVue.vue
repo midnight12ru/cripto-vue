@@ -1,11 +1,15 @@
 <template>
-    <input
-            type="text"
-            :placeholder="pl"
-            @input="handelFilter(inputValue)"
-            v-model="inputValue"
-            autofocus
-    >
+    <div>
+        <input
+                type="text"
+                :placeholder="pl"
+                @input="handelFilter(inputValue)"
+                v-model="inputValue"
+                autofocus
+                v-on:keypress.shift.enter="test"
+        >
+        <span>{{preSelection.FullName}}</span>
+    </div>
 </template>
 
 <script>
@@ -14,13 +18,26 @@
     export default {
         name: "InputVue",
         props: {
-            pl: String
+            pl: String,
+            preSelection: Object
         },
-        setup() {
+        updated(){
+          console.log(this.props)
+        },
+
+        setup({preSelection}) {
             let inputValue = ref('');
             let handelFilter = inject('filteredList');
 
-            return{handelFilter, inputValue}
+
+
+            let test = () => {
+                console.log(preSelection);
+                inputValue.value = preSelection.FullName;
+                console.log('shift enter')
+            }
+
+            return {handelFilter, inputValue, test}
         }
     }
 </script>

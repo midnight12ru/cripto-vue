@@ -1,12 +1,12 @@
 <template>
     <div class="home">
-        <InputVue ref="inputRoot"/>
+        <InputVue ref="inputRoot" :preSelection="MD.preSelection"/>
         <ListVue :list="MD.filteredList"/>
     </div>
 </template>
 
 <script>
-    import {onMounted, provide, reactive, ref} from "@vue/composition-api";
+    import {computed, onMounted, provide, reactive, ref} from "@vue/composition-api";
     import {fetchFunc, filterFunc} from "../func";
     import {InputVue, ListVue} from "../components";
 
@@ -16,7 +16,8 @@
         setup() {
             let MD = reactive({
                 listCoin: [],
-                filteredList: []
+                filteredList: [],
+                preSelection: computed(() => MD.filteredList[0] || {})
             });
 
             const inputRoot = ref(null);
@@ -24,7 +25,7 @@
             let filteredList = (val) => {
                 if (val.length) {
                     let newList = filterFunc(MD.listCoin, val)
-                    MD.filteredList=newList
+                    MD.filteredList = newList
                 } else {
                     MD.filteredList = []
                 }
