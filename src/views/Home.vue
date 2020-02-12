@@ -7,7 +7,7 @@
 
 <script>
     import {computed, onMounted, provide, reactive, ref} from "@vue/composition-api";
-    import {fetchFunc, filterFunc} from "../func";
+    import {fetchFunc, filterFunc, charCodeValute} from "../func";
     import {InputVue, ListVue} from "../components";
 
     export default {
@@ -24,14 +24,20 @@
 
             let filteredList = (val) => {
                 if (val.length) {
-                    let newList = filterFunc(MD.listCoin, val)
-                    MD.filteredList = newList
+                    let newList = filterFunc(MD.listCoin, val);
+                    MD.filteredList = newList;
+                    if (newList.length === 1) {
+                        inputRoot.value.inputValue = newList[0].FullName;
+                        MD.filteredList = []
+                    }
                 } else {
+                    inputRoot.value.test = false;
+
                     MD.filteredList = []
                 }
             };
 
-            provide('filteredList', filteredList)
+            provide('filteredList', filteredList);
 
             onMounted(() => {
                 fetchFunc(`https://min-api.cryptocompare.com/data/all/coinlist`)
@@ -57,6 +63,8 @@
                         }
                         MD.listCoin = newList;
                     });
+
+                console.log(charCodeValute())
             });
 
             return {

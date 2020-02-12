@@ -1,13 +1,17 @@
 <template>
     <div>
         <input
+                autofocus
                 type="text"
                 :placeholder="pl"
-                @input="handelFilter(inputValue)"
                 v-model="inputValue"
-                autofocus
-                v-on:keypress.shift.enter="test"
+                @input="handelFilter(inputValue)"
+
+                v-on:keypress.shift.enter="quickSetVal"
         >
+        <div v-if="test">
+            bhlejrvn
+        </div>
         <span>{{preSelection.FullName}}</span>
     </div>
 </template>
@@ -21,23 +25,19 @@
             pl: String,
             preSelection: Object
         },
-        updated(){
-          console.log(this.props)
-        },
-
-        setup({preSelection}) {
+        setup(props) {
             let inputValue = ref('');
+            let test = ref(true);
+
             let handelFilter = inject('filteredList');
 
-
-
-            let test = () => {
-                console.log(preSelection);
-                inputValue.value = preSelection.FullName;
-                console.log('shift enter')
-            }
-
-            return {handelFilter, inputValue, test}
+            let quickSetVal = () => {
+                if (inputValue.value.length) {
+                    inputValue.value = props.preSelection.FullName;
+                    handelFilter(props.preSelection.FullName)
+                }
+            };
+            return {handelFilter, inputValue, quickSetVal, test}
         }
     }
 </script>
