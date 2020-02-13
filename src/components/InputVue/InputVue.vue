@@ -9,10 +9,10 @@
 
                 v-on:keypress.shift.enter="quickSetVal"
         >
-        <div v-if="test">
-            bhlejrvn
+        <div v-if="">
+            shift+enter
+           <span>{{preSelection.FullName}}</span>
         </div>
-        <span>{{preSelection.FullName}}</span>
     </div>
 </template>
 

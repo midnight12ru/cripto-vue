@@ -25,14 +25,14 @@
             let filteredList = (val) => {
                 if (val.length) {
                     let newList = filterFunc(MD.listCoin, val);
+                    let {inputValue, preSelection:{FullName}} = inputRoot.value;
                     MD.filteredList = newList;
-                    if (newList.length === 1) {
-                        inputRoot.value.inputValue = newList[0].FullName;
+
+                    if (inputValue === FullName) {
                         MD.filteredList = []
                     }
                 } else {
                     inputRoot.value.test = false;
-
                     MD.filteredList = []
                 }
             };
