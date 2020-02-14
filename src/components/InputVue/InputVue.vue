@@ -6,12 +6,11 @@
                 :placeholder="pl"
                 v-model="inputValue"
                 @input="handelFilter(inputValue)"
-
                 v-on:keypress.shift.enter="quickSetVal"
         >
         <div v-if="">
             shift+enter
-           <span>{{preSelection.FullName}}</span>
+            <span>{{preSelection.FullName}}</span>
         </div>
     </div>
 </template>
@@ -32,7 +31,7 @@
             let handelFilter = inject('filteredList');
 
             let quickSetVal = () => {
-                if (inputValue.value.length) {
+                if (props.preSelection.hasOwnProperty('FullName')) {
                     inputValue.value = props.preSelection.FullName;
                     handelFilter(props.preSelection.FullName)
                 }

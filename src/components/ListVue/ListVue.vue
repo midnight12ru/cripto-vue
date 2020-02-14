@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="list__items" v-if="dataComp.showListItems">
         <span v-for="item in list" :key="item.Id" v-on:click="handelItemClick(item.CoinName)">
             {{item.FullName}}
         </span>
@@ -7,17 +7,23 @@
 </template>
 
 <script>
-    import {inject} from '@vue/composition-api'
+    import {computed, inject, reactive} from '@vue/composition-api'
 
     export default {
         name: "ListVue",
         props: {
-            list: Array
+            list: Array,
+            showlist: Boolean
         },
-        setup() {
+        setup(props) {
+            let dataComp = reactive({
+                showListItems: computed(() => {
+                    return props.list.length > 1;
+                })
+            });
             let filteredList = inject('filteredList');
             let handelItemClick = (val) => filteredList(val);
-            return { handelItemClick }
+            return {handelItemClick, dataComp}
         }
     }
 </script>
